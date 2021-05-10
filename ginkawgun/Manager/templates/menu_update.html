@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+
+<!-- Start All Title Box -->
+    <div class="all-title-box">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>เพิ่มรายการอาหาร</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End All Title Box -->
+<div class="shop-detail-box-main">
+        <div class="container">
+        <form method="POST" name="myForm" action="{% url 'menu_update' menu.id %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-xl-5 col-lg-5 col-md-6">
+                    <div id="carousel-example-1" class="single-product-slider carousel " data-ride="carousel">
+                        <div class="carousel-inner" role="listbox">
+                            <div class="carousel-item active">
+                            <div class="image-upload">
+                                <label for="file-input"> 
+                                    <img class="d-block w-100" src="{{ menu.picture.url }}" id='addfoodimage' name='addfoodimage'>
+                                    
+                                </label>
+                                    <input id="file-input" type="file" name="file-input" value="0" accept="image/*"/>
+                                </div>
+                                </div>
+                            
+                        </div>
+                     
+                    </div>
+                </div>
+                <div class="col-xl-7 col-lg-7 col-md-6">
+                    <div class="single-product-details">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="firstName">ชื่อเมนู</label>
+                                    <input type="text" class="form-control" name='fname' id="fname" placeholder="ชื่่อเมนู" value="{{ menu.name }}" required>
+                                    <div class="invalid-feedback"> ต้องกรอกชื่อเมนู </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="lastName">ราคา</label>
+                                    <input type="number" class="form-control" id="fprice" name='fprice' placeholder="กรุณาใส่ราคาอาหาร" value="{{ menu.price }}" required>
+                                    <div class="invalid-feedback"> ต้องกรอกราคา </div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="username">คำอธิบายเพิ่มเติม</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name='fdescription' default='' id="fdescription" placeholder="คำอธิบายเพิ่มเติม" value='{{ menu.description }}'>
+                                    
+                                </div>
+                            </div>
+                            
+                            <hr class="mb-4">
+                             
+                            </div>
+                            
+                            
+                            
+                            
+                            
+
+						<div class="price-box-bar">
+							<div class="cart-and-bay-btn">
+								
+								<button class="btn hvr-hover" type="submit" style="color:white;" >แก้ไข</button></form>
+							</div>
+						</div>
+						</div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+        <script>
+            function readURL(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+            
+                     reader.onload = function (e) {
+                        $('#addfoodimage').attr('src', e.target.result);
+                    }
+            
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+    
+            $("#file-input").change(function(){
+                readURL(this);
+            });
+	
+	
+        }(jQuery));
+        </script>
+        
+{% endblock %}

@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Site Metas -->
+    <title>Freshshop - Ecommerce Bootstrap 4 HTML Template</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Site Icons -->
+    <link rel="shortcut icon" href="{% static 'base/images/icon_new.png'%}" type="image/x-icon">
+    <link rel="apple-touch-icon" href="{% static 'base/images/icon_new.png'%}">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="{% static 'base/css/bootstrap.min.css'%}">
+    <!-- Site CSS -->
+    <link rel="stylesheet" href="{% static 'base/css/styles.css'%}">
+    <!-- Responsive CSS -->
+    <link rel="stylesheet" href="{% static 'base/css/responsive.css'%}">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'base/css/custom.css'%}">
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+    <!-- Sidebar (hidden by default) -->
+    <form method='get' action="{% url 'edituser_form' %}">
+    <nav class="w3-sidebar w3-bar-block w3-card w3-top w3-xlarge w3-animate-left" style="display:none;z-index:1000;width:30%;min-width:300px;background-color: #FFC107;" id="mySidebar">
+    <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button" style="width: 15%;text-align: center;float: right;background-color: red;">X</a>
+    <div class="w3-container" style='background-color: #303030;height: 80%;'>
+        <div>
+            <center><img src="/media/{{request.session.img}}" style="width:150px;height:150px;border-radius: 10px;border : solid #007bff;border-width: 10px;background-color:rgb(207, 233, 156);" class="w3-round"><br><br></center>
+            <div class='box' style='display: block;'>
+            <div class='showtext' style='display: block;background-color: #eee;margin-left: 5%;margin-right: 5%; color: black;'><b>Username: </b>{{user.get_username}}</div>
+            <div class='showtext' style='display: block;background-color: #eee;margin-top: 10px;margin-left: 5%;margin-right: 5%;color: black;'><b>Email: </b>{{user.email}}</div>
+            <div class='showtext'style='display: block;background-color: #eee;margin-top: 10px;margin-left: 5%;margin-right: 5%;color: black;'><b>Phone: </b>{{request.session.phone}}</div>
+            <div class='showtext'style='display: block;background-color: #eee;margin-top: 10px;margin-left: 5%;margin-right: 5%;color: black;'><b>FullName: </b>{{user.get_full_name}}</div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-success" style='margin-top: 10%;margin-left: 10%;background-color: #007bff;'>Edit User</button>
+    </div>
+    </nav>
+    </form>
+
+    
+    <!-- Start Main Top -->
+    <header class="main-header">
+        <!-- Start Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default bootsnav" style='background-color: #ffc107!important;'>
+            <div class="container">
+               
+                <div class="navbar-header">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fa fa-bars"></i>
+                </button>
+                    <a class="navbar-brand" href="#"><img src="{% static 'base/images/logo_new1.png'%}" style="width:200px; height:100px;" class="logo" alt=""></a>
+                </div>
+                <!-- End Header Navigation -->
+                
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="navbar-menu">
+                    <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
+                        <li class="nav-item"><a class="nav-link" href="{% url 'homepage' %}">Home</a></li>
+                        {% if user.is_authenticated %}
+                            <li class="nav-item"><a class="nav-link" onclick="w3_open()">My Account</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
+                            {% if perms.Manager.add_menu %}
+                            <li class="nav-item"><a class="nav-link" href="{% url 'add_food' %}">Addfood</a></li>
+                            {% endif %}
+                        {% else %}
+                            <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Register</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+
+                <!-- Start Atribute Navigation -->
+            {% if user.is_authenticated %}
+                    {% if perms.Manager.view_order %}
+                        <div class="attr-nav">
+                            <ul>
+                                <li class="side-menu"><a href="#">
+                                <i class="fas fa-file-invoice-dollar"></i>
+                                    <p>My Order</p>
+                            </a></li>
+                            </ul>
+                        </div>
+                    {% else %}
+                    <div class="attr-nav">
+                        <ul>
+                            <li class="side-menu"><a href="#">
+                            <i class="fa fa-shopping-bag"></i>
+                                <p>My Cart</p>
+                        </a></li>
+                        </ul>
+                    </div>
+                    {% endif %}
+            {% endif %}
+                <!-- End Atribute Navigation -->
+            </div>
+            <!-- Start Side Menu -->
+            <div class="side">
+                <a href="#" class="close-side"><i class="fa fa-times"></i></a>
+                <li class="cart-box">
+                    <ul class="cart-list">
+                    {% if perms.Manager.view_order %}
+                        {% for order in orderall %}
+                            {% for res_list in res_list %}
+                                {% if res_list.id == order.restaurant_id %}
+                                    {% if res_list.vendor_id == request.user.id %}
+                                        {% if order.status == 'inprogress' %}
+                                            <li style="background-color: #dc3545;" >
+                                                <a href="#" class="photo"><img src="{{ order.menu.picture.url }}" class="cart-thumb" alt="" /></a>
+                                                <h1>Order โดย : {{ order.customer.fname }}</h1>
+                                                <p>ราคา : {{ order.total_price }}</p>
+                                                <p>การจ่ายเงิน : {{ order.payment }}</p>
+                                                <p>ชื่ออาหาร : {{ order.menu.name }}</p>
+                                                <p>สถานะ : {{ order.status }}</p>
+                                                <a href='{% url "delete_order" order_id=order.id %}' class="btn btn-danger" style="width: 80px;margin-top: 20px;">Delete</a>
+                                                <a href='{% url "success_order" order_id=order.id %}' class="btn btn-success" style="width: 80px;margin-top: 20px;">Success</a>
+                                            </li>
+                                        if
+                                        {% endif %}
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                        {% endfor %}
+                    {% else %}
+                        {% for order in orderlist %}
+                            <li >
+                                <a href="#" class="photo"><img src="{{ order.menu.picture.url }}" class="cart-thumb" alt="" /></a>
+                                <h6>{{ order.menu.name }}</h6>
+                                <p>{{ order.unit }}x - <span class="price">${{ order.menu.price }}</span></p>
+                                <a href='{% url "plus_order" order_id=order.id %}' class="btn btn-primary" style="width: 40px;margin-top: 20px;">+</a>
+                                <a href='{% url "minus_order" order_id=order.id %}' class="btn btn-primary" style="width: 40px;margin-top: 20px;">-</a>
+                                <a href='{% url "delete_order" order_id=order.id %}' class="btn btn-primary" style="margin-top: 20px;">Delete</a>
+                            </li>
+                        {% endfor %}
+                        <li class="total">
+                            <a href="#" class="btn btn-default hvr-hover btn-cart">CHECK OUT</a>
+                            <span class="float-right"><strong>Total</strong>: ${{ order_list.total_price }}</span>
+                        </li>
+                    {% endif %}
+                    </ul>
+                </li>
+            </div>
+            <!-- End Side Menu -->
+        </nav>
+        <!-- End Navigation -->
+    </header>
+    <!-- End Main Top -->
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" herf="" class="btn btn-primary">Save changes</button>
+        </div>
+        </div>
+    </div>
+    </div>
+
+
+
+    <!-- Start Top Search -->
+    <div class="top-search">
+        <div class="container">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                <input type="text" class="form-control" placeholder="Search">
+                <span class="input-group-addon close-search"><i class="fa fa-times"></i></span>
+            </div>
+        </div>
+    </div>
+    <!-- End Top Search -->
+
+
+
+    <!-- Start About Page  -->
+        {% block content %}
+        {% endblock %}
+    <!-- End About Page -->
+
+
+
+    <!-- Start Footer  -->
+    <footer>
+        <div class="footer-main">
+            <div class="container">
+				<div class="row">
+					<div class="col-lg-4 col-md-12 col-sm-12">
+						<div class="footer-top-box">
+							<h3>Business Time</h3>
+							<ul class="list-time">
+								<li>Monday - Friday: 08.00am to 05.00pm</li> <li>Saturday: 10.00am to 08.00pm</li> <li>Sunday: <span>Closed</span></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-lg-4 col-md-12 col-sm-12">
+						<div class="footer-top-box">
+							<h3>Newsletter</h3>
+							<form class="newsletter-box">
+								<div class="form-group">
+									<input class="" type="email" name="Email" placeholder="Email Address*" />
+									<i class="fa fa-envelope"></i>
+								</div>
+								<button class="btn hvr-hover" type="submit">Submit</button>
+							</form>
+						</div>
+					</div>
+					<div class="col-lg-4 col-md-12 col-sm-12">
+						<div class="footer-top-box">
+							<h3>Social Media</h3>
+							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+							<ul>
+                                <li><a href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fab fa-linkedin" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fab fa-google-plus" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fa fa-rss" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fab fa-pinterest-p" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fab fa-whatsapp" aria-hidden="true"></i></a></li>
+                            </ul>
+						</div>
+					</div>
+				</div>
+				<hr>
+                <div class="row">
+                    <div class="col-lg-4 col-md-12 col-sm-12">
+                        <div class="footer-widget">
+                            <h4>About Faculty of Information Technology (King Mongkut's Institute of Technology Ladkrabang)</h4>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p> 
+							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p> 							
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-12 col-sm-12">
+                        <div class="footer-link">
+                            <h4>Information</h4>
+                            <ul>
+                                <li><a href="#">About Us</a></li>
+                                <li><a href="#">Customer Service</a></li>
+                                <li><a href="#">Our Sitemap</a></li>
+                                <li><a href="#">Terms &amp; Conditions</a></li>
+                                <li><a href="#">Privacy Policy</a></li>
+                                <li><a href="#">Delivery Information</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-12 col-sm-12">
+                        <div class="footer-link-contact">
+                            <h4>Contact Us</h4>
+                            <ul>
+                                <li>
+                                    <p><i class="fas fa-map-marker-alt"></i>Address: Michael I. Days 3756 <br>Preston Street Wichita,<br> KS 67213 </p>
+                                </li>
+                                <li>
+                                    <p><i class="fas fa-phone-square"></i>Phone: <a href="tel:+1-888705770">+1-888 705 770</a></p>
+                                </li>
+                                <li>
+                                    <p><i class="fas fa-envelope"></i>Email: <a href="mailto:contactinfo@gmail.com">contactinfo@gmail.com</a></p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- End Footer  -->
+
+    <!-- Start copyright  -->
+    <!-- End copyright  -->
+
+    <a href="#" id="back-to-top" title="Back to top" style="display: none;">&uarr;</a>
+
+    <!-- ALL JS FILES -->
+    <script src="{% static 'base/js/jquery-3.2.1.min.js'%}"></script>
+    <script src="{% static 'base/js/popper.min.js'%}"></script>
+    <script src="{% static 'base/js/bootstrap.min.js'%}"></script>
+    <!-- ALL PLUGINS -->
+    <script src="{% static 'base/js/jquery.superslides.min.js'%}"></script>
+    <script src="{% static 'base/js/bootstrap-select.js'%}"></script>
+    <script src="{% static 'base/js/inewsticker.js'%}"></script>
+    <script src="{% static 'base/js/bootsnav.js.'%}"></script>
+    <script src="{% static 'base/js/images-loded.min.js'%}"></script>
+    <script src="{% static 'base/js/isotope.min.js'%}"></script>
+    <script src="{% static 'base/js/owl.carousel.min.js'%}"></script>
+    <script src="{% static 'base/js/baguetteBox.min.js'%}"></script>
+    <script src="{% static 'base/js/form-validator.min.js'%}"></script>
+    <script src="{% static 'base/js/contact-form-script.js'%}"></script>
+    <script src="{% static 'base/js/custom1.js'%}"></script>
+
+    <script>
+// Script to open and close sidebar
+function w3_open() {
+  document.getElementById("mySidebar").style.display = "block";
+}
+ 
+function w3_close() {
+  document.getElementById("mySidebar").style.display = "none";
+}
+</script>
+
+</body>
+
+</html>

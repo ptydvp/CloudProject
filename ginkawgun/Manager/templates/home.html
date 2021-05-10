@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+<!-- Start All Title Box -->
+    <div class="all-title-box" style='background: url("https://miro.medium.com/max/3000/1*H0SEqBfN00Zjkz_jkn3g_g.png") no-repeat center center;'>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2 style='font-size: 80px;'>Have you had lunch?</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End All Title Box -->
+    <div class="shop-box-inner">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-9 col-lg-9 col-sm-12 col-xs-12 shop-content-right">
+                    <div class="right-product-box">
+                        <div class="product-item-filter row">
+                            <div class="col-12 col-sm-8 text-center text-sm-left">
+                                <div class="toolbar-sorter-right">
+                                    <span>Sort by </span>
+                                    <select id="basic" class="selectpicker show-tick form-control" data-placeholder="$ USD">
+                                    <option data-display="Select">Nothing</option>
+                                    <option value="1">Popularity</option>
+                                    <option value="2">High Price → High Price</option>
+                                    <option value="3">Low Price → High Price</option>
+                                    <option value="4">Best Selling</option>
+                                    </select>
+                                </div>
+                                <p>Showing all {{menu}} results</p>
+                            </div>
+                            <div class="col-12 col-sm-4 text-center text-sm-right">
+                                <ul class="nav nav-tabs ml-auto">
+                                    <li>
+                                        <a class="nav-link active" href="#grid-view" data-toggle="tab"> <i class="fa fa-th"></i> </a>
+                                    </li>
+                                    <li>
+                                        <a class="nav-link" href="#list-view" data-toggle="tab"> <i class="fa fa-list-ul"></i> </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="product-categorie-box">
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane fade show active" id="grid-view">
+                                    <div class="row">
+                                        {% for menu in menu_list %}
+                                            <div class="col-lg-4 col-md-6 special-grid best-seller">
+                                                <div class="products-single fix">
+                                                    <div class="box-img-hover">
+                                                        <img src="{{ menu.picture.url }}" class="img-fluid" alt="Image" style='width: 500px;height: 250px;'>
+                                                        <div class="mask-icon">
+                                                            <ul>
+                                                                {% for res in res_list %}
+                                                                {% if menu.restaurant_id == res.id and res.vendor_id == user.id%}
+                                                                <li><a href="{% url 'menu_update' menu_id=menu.id %}" data-toggle="tooltip" data-placement="right" title="" data-original-title="Update"><i class="fas fa-sync-alt"></i></a></li>
+                                                                <li><a href="{% url 'menu_delete' menu_id=menu.id %}" data-toggle="tooltip" data-placement="right" title="" data-original-title="Delete"><i class="fas fa-trash-alt"></i></a></li>
+                                                                {% endif %}
+                                                                {% endfor %}
+                                                            </ul>
+                                                            <a class="cart" href="{% url 'addtocart' menu_id=menu.id %}">Add to Cart</a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="why-text">
+                                                        <h4>{{ menu.name }}</h4>
+                                                        {% for res in res_list %}
+                                                        {% if menu.restaurant_id == res.id %}
+                                                        <h4 style="color: black;">{{res.name}}<h4>
+                                                        {% endif %}
+                                                        {% endfor %}
+                                                        <h5>{{ menu.price }} Baht</h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    <div class="col-xl-3 col-lg-3 col-sm-12 col-xs-12 sidebar-shop-left">
+                    <div class="product-categori">
+                        <div class="search-product">
+                                <form method="GET" action="{% url 'homepage' %}">
+                                <input class="form-control" placeholder="Search here..." type="text" id="search" name="search" value={{search}}>
+                                <button type="submit" class="btn btn-primary ml-3"><i class="fa fa-search"></i>Submit</button>
+                                </form>
+                        </div>
+                        <div class="filter-sidebar-left">
+                            <div class="title-left">
+                                <h3>Categories</h3>
+                            </div>
+                            <div class="list-group list-group-collapse list-group-sm list-group-tree" id="list-group-men" data-children=".sub-men">
+
+                                <div class="list-group-collapse sub-men">
+                                    <a class="list-group-item list-group-item-action" href="#sub-men1" data-toggle="collapse" aria-expanded="true" aria-controls="sub-men1">อาหารประเภทข้าว<small class="text-muted">(100)</small></a>
+                                    <div class="collapse show" id="sub-men1" data-parent="#list-group-men">
+                                        <div class="list-group">
+                                            <a href='{% url "menu" res_id=24 %}' class="list-group-item list-group-item-action active">ป้าเล็กร้านสามไอที<small class="text-muted">(50)</small></a>
+                                            <a href='{% url "menu" res_id=15 %}' class="list-group-item list-group-item-action">ร้านน้องพลอย<small class="text-muted">(10)</small></a>
+                                            <a href='{% url "menu" res_id=13 %}' class="list-group-item list-group-item-action">ร้านพี่ช้าง-สมเกียรติ<small class="text-muted">(10)</small></a>
+                                            <a href='{% url "menu" res_id=14 %}' class="list-group-item list-group-item-action">ร้านป้านกเล็ก<small class="text-muted">(10)</small></a>
+                                            <a href='{% url "menu" res_id=16 %}' class="list-group-item list-group-item-action">ร้านวิลัย<small class="text-muted">(10)</small></a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="list-group-collapse sub-men">
+                                    <a class="list-group-item list-group-item-action" href="#sub-men2" data-toggle="collapse" aria-expanded="false" aria-controls="sub-men2">อาหารประเภทเส้น<small class="text-muted">(50)</small></a>
+                                    <div class="collapse" id="sub-men2" data-parent="#list-group-men">
+                                        <div class="list-group">
+                                            <a href='{% url "menu" res_id=18 %}' class="list-group-item list-group-item-action">ร้านก๋วยเตี๋ยวหมูน้ำตกต้มยำ<small class="text-muted">(10)</small></a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="list-group-collapse sub-men">
+                                    <a class="list-group-item list-group-item-action" href="#sub-men3" data-toggle="collapse" aria-expanded="false" aria-controls="sub-men3">อาหารทานเล่นเเละเครื่องดื่ม<small class="text-muted">(50)</small></a>
+                                    <div class="collapse" id="sub-men3" data-parent="#list-group-men">
+                                        <div class="list-group">
+                                            <a href='{% url "menu" res_id=20 %}' class="list-group-item list-group-item-action">ร้านDD coffee<small class="text-muted">(10)</small></a>
+                                            <a href='{% url "menu" res_id=19 %}' class="list-group-item list-group-item-action">ร้านBrown bear cafe<small class="text-muted">(10)</small></a>
+                                            <a href='{% url "menu" res_id=21 %}' class="list-group-item list-group-item-action">ร้านจิบกาแฟสด<small class="text-muted">(10)</small></a>
+                                            <a href='{% url "menu" res_id=22 %}' class="list-group-item list-group-item-action">ร้านวรัญญาซาลาเปา<small class="text-muted">(10)</small></a>
+                                            <a href='{% url "menu" res_id=17 %}' class="list-group-item list-group-item-action">ร้านพี่ฝนกาแฟสด&ผลไม้ปั่น<small class="text-muted">(10)</small></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+</script>
+{% endblock %}

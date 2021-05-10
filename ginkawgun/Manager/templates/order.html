@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class='container'>
+    <div class='col-sm-12 md-4 mt-3 left top'>
+        <h1>รายการ Order ร้าน : {{ res.name }}</h1>
+    </div>
+    <div class='row'>
+        {% for all in order %}    
+            <div class='col-sm-4'>
+                <div class='card'>
+                    <div class='card-body'>
+                        <h1>Order โดย : {{ all.customer.fname }}</h1>
+                        <p>ราคา : {{ all.total_price }}</p>
+                        <p>การจ่ายเงิน : {{ all.payment }}</p>
+                        <p>ชื่ออาหาร : {{ all.menu.name }}</p>
+                        <p>รายละเอียดการสั่ง : {{ all.description }}</p>
+                        <p>สถานะ : {{ all.status }}
+                        {% comment %} <form metho='GET' action="{% url 'order' %}">
+                            <button type='submit' class='btn btn-warning'>DONE</div>
+                        </form> {% endcomment %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock%}

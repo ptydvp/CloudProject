@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class='container'>
+    <div class='row'>
+        <div class='col-sm-12 card md-4 mt-3 left top'>
+            <h2 class='card-title mt-3'>Feedback</h2>
+            <p class='card-text my-3 mx-3 '> {{ feed.vendor.user.username }} </p>
+            {% for fb in feed %}
+                <div class='card mb-2'>
+                    <p>{{ fb.description }}</p>
+                </div>
+            {% endfor %}
+            <br>
+            {% if user.is_authenticated %}<h2 class='card-title'>Write Your Feedback!!!</h2>
+            <form method='POST' class='form-inline' action=' url "feedback" ven_id=Vendor.id '>
+            {% csrf_token %}
+                <textarea class='form-control mt-3 col-sm-8' row='10' id='comment' name='comment' value={{comment}}></textarea>
+                <button class='btn btn-primary mt-3 ml-4'> Save </button>
+            </form>
+            {% endif %}
+            <br>
+        </div>
+    </div>
+</div>
+{% endblock  %}

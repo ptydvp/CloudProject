@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+<!-- Start All Title Box -->
+
+    <div class="all-title-box" style='background: url("https://miro.medium.com/max/3000/1*H0SEqBfN00Zjkz_jkn3g_g.png") no-repeat center center;'>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2 style='font-size: 80px;'>{{ restaurant.name }}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End All Title Box -->
+    
+    <div class="cart-box-main">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2 style='font-size: 40px;'>แก้ไขเมนูอาหาร</h2>
+                    <div class="table-main table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>รายการอาหาร</th>
+                                    <th>ราคา</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for menu in food %}
+                                <tr>
+                                    <td class="thumbnail-img">
+									<img class="img-fluid" src="{{ menu.picture.url }}" alt="" />
+                                    </td>
+                                    <td class="name-pr">
+									{{ menu.name }}
+                                    </td>
+                                    <td class="price-pr">
+                                        <p>{{ menu.price }}</p>
+                                    </td>
+                                    <td class="remove-pr">
+                                        
+									<a href="{% url 'menu_update' menu_id=menu.id %}"><button class='btn btn-outline-warning'>แก้ไข</button></a>
+                                    <a href="{% url 'menu_delete' menu_id=menu.id %}"><button class='btn btn-outline-danger'>ลบ</button></a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+    </div>
+
+{% endblock %}

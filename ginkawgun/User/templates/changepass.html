@@ -1,0 +1,114 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Colorlib Templates">
+    <meta name="author" content="Colorlib">
+    <meta name="keywords" content="Colorlib Templates">
+
+    <!-- Title Page-->
+    <title>Au Register Forms by Colorlib</title>
+
+    <!-- Icons font CSS-->
+    <link href="{% static 'register/vendor/mdi-font/css/material-design-iconic-font.min.css'%}" rel="stylesheet" media="all">
+    <link href="{% static 'register/vendor/font-awesome-4.7/css/font-awesome.min.css'%}" rel="stylesheet" media="all">
+    <!-- Font special for pages-->
+    <link href="{% static 'register/https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i'%}" rel="stylesheet">
+
+    <!-- Vendor CSS-->
+    <link href="{% static 'register/vendor/select2/select2.min.css'%}" rel="stylesheet" media="all">
+    <link href="{% static 'register/vendor/datepicker/daterangepicker.css'%}" rel="stylesheet" media="all">
+
+    <!-- Main CSS-->
+    <link href="{% static 'register/css/main.css'%}" rel="stylesheet" media="all">
+</head>
+
+<body>
+    <div class="page-wrapper bg-gra-03 p-t-45 p-b-50">
+        <div class="wrapper wrapper--w790">
+            <div class="card card-5">
+                <div class="card-heading">
+                    <h2 class="title">ChangePassword</h2>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{% url 'cpass' %}">
+                         {% csrf_token %}
+                        {% if error == 'Invalid Email' %}
+                        <div class="alert" style='color: red; text-align: center;'>
+  					        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+  					        <strong>Error </strong>{{error}}
+				        </div>
+                        {% endif %}
+                    <div class="form-row m-b-55">
+                    <div class="form-row">
+                        <div class="name">Email</div>
+                                <div class="value">
+                                    <div class="input-group">
+                                        {{form.email}}
+                                        {{form.email.error}}
+                                    </div>
+                                </div>
+                        </div>
+                        {% if error == 'Invalid Username'%}
+                        <div class="alert" style='color: red; margin: auto;'>
+  					        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+  					        <strong>Error </strong>{{error}}
+				        </div>
+                        {% endif %}
+                        <div class="form-row m-b-55">
+                            <div class="name">Username</div>
+                            <div class="value">
+                                <div class="row row-refine">
+                                    <div class="col-9">
+                                        <div class="input-group-desc">
+                                            {{form.username}}
+                                            {{form.username.error}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row m-b-55">
+                            <div class="name">NewPassword</div>
+                            <div class="value">
+                                <div class="row row-refine">
+                                    <div class="col-9">
+                                        <div class="input-group-desc">
+                                            {{form.newpassword}}
+                                            {{form.newpassword.error}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+
+                        <div>
+                            <button class="btn btn--radius-2 btn--green" type="submit" >submit</button>
+                            <a href="{% url 'login' %}" class="btn btn--radius-2 btn--red">Cancel</a>
+                        </div>       
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Jquery JS-->
+    <script src="{% static 'register/vendor/jquery/jquery.min.js'%}"></script>
+    <!-- Vendor JS-->
+    <script src="{% static 'register/vendor/select2/select2.min.js'%}"></script>
+    <script src="{% static 'register/vendor/datepicker/moment.min.js'%}"></script>
+    <script src="{% static 'register/vendor/datepicker/daterangepicker.js'%}"></script>
+
+    <!-- Main JS-->
+    <script src="{% static 'register/js/global.js'%}"></script>
+</body>
+
+</html>
+<!-- end document-->
